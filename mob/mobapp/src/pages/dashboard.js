@@ -13,7 +13,7 @@ import DehazeIcon from '@mui/icons-material/Dehaze';
 import { Modal } from 'react-native';
 import bg from '../assets/bg.png';
 
-export default function Dashboard() {
+export default function Dashboard({ navigation }) {
   const dailyGoal = 2000;
   const increment = 250;
   const [consumedWater, setConsumedWater] = useState(0);
@@ -22,27 +22,15 @@ export default function Dashboard() {
   const [meterFill, setMeterFill] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
 
-   const addWater = () => {
+  const addWater = () => {
     const newConsumedWater = consumedWater + increment;
-
-    // Calculate meter fill percentage based on the consumption percentage
-    const newMeterFill = Math.min((newConsumedWater / dailyGoal) * 100, 100);
-    setMeterFill(newMeterFill);
-
-    // Add the consumption record to the history
-    const timestamp = new Date().toLocaleTimeString();
-    const record = `${timestamp}: +${increment}ml`;
-    consumptionHistory.unshift(record); // Add the new record at the beginning of the array
-
-    // Show the message
-    setMessage('Good Job +250ml');
-
-    // Hide the message after 0.5 seconds
-    setTimeout(() => {
-      setMessage(null);
-    }, 500);
-
-    setConsumedWater(newConsumedWater);
+    if (newConsumedWater <= dailyGoal) {
+      setConsumedWater(newConsumedWater);
+      const fillPercentage = (newConsumedWater / dailyGoal) * 100;
+      setMeterFill(fillPercentage);
+    } else {
+      setMessage("You've reached your daily goal!");
+    }
   };
 
   const scheduleReminder = () => {
@@ -59,6 +47,21 @@ export default function Dashboard() {
 
   const closeSlideInModal = () => {
     setModalVisible(false);
+  };
+
+  const navigateToDashboard = () => {
+    setModalVisible(false); // Close the modal
+    navigation.navigate('Dashboard'); // Navigate to the Dashboard screen
+  };
+
+  const navigateToHistory = () => {
+    setModalVisible(false); // Close the modal
+    navigation.navigate('History'); // Navigate to the History screen
+  };
+
+  const navigateToSettings = () => {
+    setModalVisible(false); // Close the modal
+    navigation.navigate('Settings'); // Navigate to the Settings screen
   };
 
   return (
@@ -103,19 +106,24 @@ export default function Dashboard() {
         </View>
       </ImageBackground>
       <Modal
-        
         transparent={true}
         visible={isModalVisible}
-       
         onBackdropPress={closeSlideInModal}
         animationIn="slideInLeft"
         animationOut="slideOutLeft"
         onRequestClose={toggleModal}
       >
         <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Modal Content Goes Here</Text>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text style={styles.buttonText}>Close Modal</Text>
+            
+          <Text style={styles.modalText}>Welcome</Text>
+          <TouchableOpacity onPress={navigateToDashboard}>
+            <Text style={styles.buttonText}>Dashboard</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToHistory}>
+            <Text style={styles.buttonText}>History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToSettings}>
+            <Text style={styles.buttonText}>Settings</Text>
           </TouchableOpacity>
         </View>
       </Modal>

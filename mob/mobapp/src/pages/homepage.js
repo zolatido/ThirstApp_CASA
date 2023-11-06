@@ -6,7 +6,7 @@ import bg from '../assets/bg.png';
 
 
 
-export default function Goals({ navigation }) {
+export default function Username({ navigation }) {
   const [courseGoals, setCourseGoals] = useState([]);
   const [enteredGoalText, setEnteredGoalText] = useState('');
 
@@ -35,7 +35,7 @@ export default function Goals({ navigation }) {
             <Text style={styles.headerMotto3}>-Arwen 2023</Text>
             <TouchableOpacity
               style={styles.addButton}
-              onPress={() => navigation.navigate('Goals')}
+              onPress={() => navigation.navigate('Username')}
             >
               <Text style={styles.addButtonLabel}>Get Started</Text>
             </TouchableOpacity>
