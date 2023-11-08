@@ -1,21 +1,38 @@
 //dashboard.js
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  ImageBackground,
-  StyleSheet,
-} from 'react-native';
-import bottle from '../assets/bottle.png';
-import DehazeIcon from '@mui/icons-material/Dehaze';
-import { Modal } from 'react-native';
-import bg from '../assets/bg.png';
 
-export default function Dashboard({ navigation }) {
-  const dailyGoal = 2000;
+import React, { useState } from 'react';
+import {View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal} from 'react-native';
+
+
+//assets
+import DehazeIcon from '@mui/icons-material/Dehaze';
+import bg from '../assets/bg.png';
+import bottle from '../assets/bottle.png';
+
+export default function Dashboard({ navigation, route }) {
+  // Get the selected bottle size from the navigation parameters
+  const selectedBottleSize = route.params ? route.params.selectedBottleSize : '1 L';
+  
+  // Goals.js - define daily goals based on selected bottle
+  const dailyGoals = {
+    '1 L': 1000,
+    '1.5 L': 1500,
+    '2 L': 2000,
+    '2.5 L': 2500,
+    '3 L': 3000,
+    'Custom': 0, 
+  };
+
+
+  const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
+ 
+
+  // Use the custom goal if available, otherwise use the default
+  const customGoal = route.params ? route.params.customGoal : null;
+  const dailyGoalcustom = customGoal ? parseInt(customGoal, 10) : dailyGoals[selectedBottleSize];
+
+
+
   const increment = 250;
   const [consumedWater, setConsumedWater] = useState(0);
   const [message, setMessage] = useState(null);
@@ -24,28 +41,31 @@ export default function Dashboard({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
+
+
   const addWater = () => {
     const newConsumedWater = consumedWater + increment;
-    if (newConsumedWater <= dailyGoal) {
-      setConsumedWater(newConsumedWater);
-      const fillPercentage = (newConsumedWater / dailyGoal) * 100;
-      setMeterFill(fillPercentage);
-
-      // Add a new record to the consumption history
-      const time = new Date().toLocaleTimeString();
-      const newRecord = `${time}  +${increment} ml`;
-      setConsumptionHistory([newRecord, ...consumptionHistory]);
-    } else {
+    setConsumedWater(newConsumedWater);
+  
+    const fillPercentage = (newConsumedWater / dailyGoal) * 100;
+    setMeterFill(fillPercentage);
+  
+    if (newConsumedWater >= dailyGoal) {
       setMessage("You've reached your daily goal!");
     }
+  
+    // Add a new record to the consumption history
+    const time = new Date().toLocaleTimeString();
+    const newRecord = `${time} +${increment} ml`;
+    setConsumptionHistory([newRecord, ...consumptionHistory]);
   };
+  
 
   const scheduleReminder = () => {
-    // Implement your logic for scheduling a reminder here
+    // Schedule Reminder
   };
-
   const scheduleNotification = () => {
-    // Implement your logic for scheduling a notification here
+    // Schedule Notification
   };
 
   const toggleModal = () => {
@@ -56,19 +76,22 @@ export default function Dashboard({ navigation }) {
     setModalVisible(false);
   };
 
+  // Navigate to Dashboard 
   const navigateToDashboard = () => {
-    setModalVisible(false); // Close the modal
-    navigation.navigate('Dashboard'); // Navigate to the Dashboard screen
+    setModalVisible(false); // Close modal
+    navigation.navigate('Dashboard'); 
   };
 
+  // Navigate to History 
   const navigateToHistory = () => {
-    setModalVisible(false); // Close the modal
-    navigation.navigate('History'); // Navigate to the History screen
+    setModalVisible(false); // Close modal
+    navigation.navigate('History'); 
   };
 
+  // Navigate to Settings
   const navigateToSettings = () => {
-    setModalVisible(false); // Close the modal
-    navigation.navigate('Settings'); // Navigate to the Settings screen
+    setModalVisible(false); // Close modal
+    navigation.navigate('Settings');  
   };
 
   return (
@@ -78,7 +101,7 @@ export default function Dashboard({ navigation }) {
           <View style={styles.appContainer}>
             <View style={styles.headerContainer}>
               <TouchableOpacity onPress={toggleModal}>
-                <DehazeIcon />
+                <DehazeIcon/>
               </TouchableOpacity>
             </View>
             <Text style={styles.header}>Water Consumption Dashboard</Text>
@@ -107,6 +130,8 @@ export default function Dashboard({ navigation }) {
               ))}
             </ScrollView>
             <View style={styles.buttonContainer}>
+
+          
               <TouchableOpacity style={styles.button} onPress={scheduleReminder}>
                 <Text style={styles.buttonText}>Schedule Reminder   </Text>
               </TouchableOpacity>

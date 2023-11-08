@@ -72,7 +72,7 @@ export default function Dashboard({ navigation }) {
                       navigation.navigate('Custom');
                     } else {
                       // Handle other bottles or add navigation logic here
-                      navigation.navigate('Dashboard');
+                      navigation.navigate('Dashboard', { selectedBottleSize: bottle.label });
                     }
                   }}
                 >

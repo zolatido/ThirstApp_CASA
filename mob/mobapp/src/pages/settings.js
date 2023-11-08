@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, ImageBackground, TextInput, TouchableOpacity, Image } from 'react-native';
 
+
+import logodrink from '../assets/logodrink.png'
+import bg from '../assets/bg.png';
+
+
+
 export default function Reminder({navigation}) {
   const [courseGoals, setCourseGoals] = useState([]);
   const [email, setEmail] = useState('');
@@ -19,7 +25,7 @@ export default function Reminder({navigation}) {
       <View style={styles.overlay}>
         <View style={styles.headerContainer}>
           <Image
-            source={require('/Users/Sanchez/Desktop/logotransbilog.png')}
+            source={logodrink}
             style={styles.logo}
           />
           <Text style={styles.headerText}>ThirstyApp</Text>
