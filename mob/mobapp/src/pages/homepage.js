@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
+
+
+//assets
 import logodrink from '../assets/logotrans.png';
 import bg from '../assets/bg.png';
 
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 170, // size nung logo
     width:170, // size nung loge
-    top: 60,
+    top: 55,
     alignItems: 'center',
     
   },
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   //(HOME)started
   headerMotto2: {
     fontSize: 24,
-    
+    fontWeight: 'bold',
     color: "white",
     top: 50,
   },
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
   headerMotto3: {
     fontSize: 15,
     color: "white",
-    top: 80,
+    top: 60,
    
     
   },

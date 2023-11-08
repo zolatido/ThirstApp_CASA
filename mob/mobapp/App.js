@@ -21,10 +21,7 @@ function App() {
   
   return (
     <NavigationContainer>
-
-      
-      
-      <Stack.Navigator>
+      <Stack.Navigator >
         
 
         <Stack.Screen

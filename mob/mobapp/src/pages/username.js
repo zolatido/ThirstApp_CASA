@@ -1,137 +1,191 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, ImageBackground, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
 
 
+//assets
 import logodrink from '../assets/logotrans.png';
 import bg from '../assets/bg.png';
 
-export default function Goals({navigation}) {
-  const [courseGoals, setCourseGoals] = useState([]);
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  function addGoalHandler() {
-    // You can handle this function as needed.
-  }
+
+export default function Goals({ navigation }) {
+  const [username, setUsername] = useState('');
 
   return (
     <ImageBackground
       source={bg}
       style={styles.container}
     >
-      <View style={styles.overlay}>
-        <View style={styles.headerContainer}>
-          <Image
-            source={logodrink}
-            style={styles.logo}
-          />
-          <Text style={styles.headerText}>Are you ready for ThirstApp?</Text>
-          <Text style={styles.headerMotto}>First, what should we call you?</Text>
-        </View>
+        <View style={styles.overlay}>
+          <View style={styles.appContainer}>
+            <Image source={logodrink} style={styles.logo} />
+            <Text style={styles.headerMotto2}>Are you ready for ThirstApp?</Text>
+            <Text style={styles.headerMotto3}>First, what should we call you?</Text>
 
-        <View style={styles.inputContainer}>
-          <View style={styles.inputBox}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter your Username"
-              onChangeText={(text) => setUsername(text)}
-              value={username}
-            />
-          </View>
-        </View>
+            <View style={styles.inputContainer}>
+              <View style={styles.inputBox}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="    Enter your Username"
+                  onChangeText={(text) => setUsername(text)}
+                  value={username}
+                />
+              </View>
+            </View>
 
-    
-
+          
             <TouchableOpacity
               style={styles.addButton}
               onPress={() => navigation.navigate('Goals')}
             >
-              <Text style={styles.addButtonLabel}>let's Go</Text>
-              
+              <Text style={styles.addButtonLabel}>Let's Go!</Text>
             </TouchableOpacity>
           </View>
-    </ImageBackground>
+          
+          
+        </View>
+        </ImageBackground>
+    
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+  },
+  
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+
+  appContainer: {
+    flex: 1,
+    paddingTop: 50,
+    paddingBottom: 50,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    
   },
   headerContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
   },
 
+
+  //baboy na umiinom
   logo: {
-    height: 170,
-    width: 170,
+    height: 170, // size nung logo
+    width:170, // size nung loge
+    top: 55,
+    alignItems: 'center',
+    
   },
-
+ 
   headerText: {
+    fontSize: 24,
+    
+    color: "white",
+  },
+  
+  //(HOME)Welcome to hydrate4Today
+  headerMotto: {
     fontSize: 50,
-    fontWeight: 'bold',
-    color: 'white',
+    
+    color: "white",
+    top: 55,
+    
   },
 
-  headerMotto: {
-    fontSize: 18,
-    color: 'white',
-    marginTop: 20,
+  //(HOME)started
+  headerMotto2: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: "white",
+    top: 50,
+  },
+
+  //Stay hydrated
+  headerMotto3: {
+    fontSize: 20,
+    color: "white",
+    top: 70,
+   
+    
   },
 
   inputContainer: {
     alignItems: 'center',
-    bottom: 40,
-    marginBottom: 30,
+    top: 120,
+    marginBottom: 5,
     paddingHorizontal: 50,
     paddingVertical: 10,
-    
-
   },
   inputBox: {
-    borderWidth: 2,
+    borderWidth: 0,
     borderColor: 'white',
     borderRadius: 6,
-    
-    
-  },
-  textInput: {
-    
-    color: 'white',
     paddingHorizontal: 50,
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
-   //get started button
+
+  //user input
+  textInput: {
+    flex: 1,
+    marginRight: 10,
+    borderBottomWidth: 2,
+    color: 'white',
+    borderColor: 'white',
+    paddingVertical: 15,
+    paddingHorizontal:10,
+    alignContent: 'center',
+  },
+
+  //get started button
   addButton: {
-    backgroundColor: '#A3D7E7', 
+    backgroundColor: '#8BADD3', // Creamy aesthetic color
     
     paddingVertical: 23,
-    paddingHorizontal: 5,
+    paddingHorizontal: 70,
     borderRadius: 10,
-    bottom: 10,
+    bottom: -150,
     alignItems:'center',
     
   },
+
+  //text sa button
   addButtonLabel: {
-    fontSize: 18,
-    color: '#333',
-    fontWeight: 'bold',
-   
-  },
-  headerLabel: {
-    fontSize: 24,
-    color: 'white',
-    marginBottom: 10,
+    fontSize: 23,
+    color: '#333', // Text color
+    
+    
   },
 
+
+  headerLabel: {
+    fontSize: 30,
+    color: 'white', // Text color
+  },
+
+
+  goalListContainer: {
+    marginTop: 20,
+    
+  },
+  goalItems: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+  },
+  goalText: {
+    fontSize: 18,
+  },
 });

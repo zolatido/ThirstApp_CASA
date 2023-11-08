@@ -30,6 +30,7 @@ export default function Dashboard({ navigation }) {
   const bottleGrid = chunkArray(bottles, 3); // Create a 3x2 grid of bottles
 
   return (
+    <View style={styles.container}>
     <ImageBackground
       source={bg}
       style={styles.container}
@@ -83,6 +84,7 @@ export default function Dashboard({ navigation }) {
         </View>
       </View>
     </ImageBackground>
+  </View>
   );
 }
 
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   headerContainer: {
     flex: 1,

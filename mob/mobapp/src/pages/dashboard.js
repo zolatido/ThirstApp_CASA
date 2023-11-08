@@ -21,6 +21,7 @@ export default function Dashboard({ navigation }) {
   const [consumptionHistory, setConsumptionHistory] = useState([]);
   const [meterFill, setMeterFill] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
   const addWater = () => {
     const newConsumedWater = consumedWater + increment;
@@ -28,6 +29,11 @@ export default function Dashboard({ navigation }) {
       setConsumedWater(newConsumedWater);
       const fillPercentage = (newConsumedWater / dailyGoal) * 100;
       setMeterFill(fillPercentage);
+
+      // Add a new record to the consumption history
+      const time = new Date().toLocaleTimeString();
+      const newRecord = `${time}  +${increment} ml`;
+      setConsumptionHistory([newRecord, ...consumptionHistory]);
     } else {
       setMessage("You've reached your daily goal!");
     }
@@ -66,42 +72,47 @@ export default function Dashboard({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={bg}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.appContainer}>
-          <View style={styles.headerContainer}>
-            <TouchableOpacity onPress={toggleModal}>
-              <DehazeIcon />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.header}>Water Consumption Dashboard</Text>
-          <View style={styles.meterContainer}>
-            <View style={styles.meter}>
-              <View style={[styles.fill, { height: `${meterFill}%` }]} />
+      <ImageBackground source={bg} style={styles.backgroundImage}>
+        <View style={styles.overlay}>
+          <View style={styles.appContainer}>
+            <View style={styles.headerContainer}>
+              <TouchableOpacity onPress={toggleModal}>
+                <DehazeIcon />
+              </TouchableOpacity>
             </View>
-          </View>
-          <Text style={styles.consumedText}>{consumedWater} ml</Text>
-          <Text style={styles.goalText}>Goal: {dailyGoal} ml</Text>
-          <TouchableOpacity onPress={addWater}>
-            <Image source={bottle} style={styles.touchableWaterBottle} />
-          </TouchableOpacity>
-          {message && <Text style={styles.messageText}>{message}</Text>}
-          <ScrollView style={styles.historyContainer}>
-            {consumptionHistory.map((record, index) => (
-              <View key={index} style={styles.historyRecord}>
-                <Text style={styles.historyText}>{record}</Text>
+            <Text style={styles.header}>Water Consumption Dashboard</Text>
+            <View style={styles.meterContainer}>
+              <View style={styles.meter}>
+                <View style={[styles.fill, { height: `${meterFill}%` }]} />
               </View>
-            ))}
-          </ScrollView>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={scheduleReminder}>
-              <Text style={styles.buttonText}>Schedule Reminder   </Text>
+            </View>
+            <Text style={styles.consumedText}>{consumedWater} ml</Text>
+            <Text style={styles.goalText}>Goal: {dailyGoal} ml</Text>
+            <TouchableOpacity onPress={addWater}>
+              <Image source={bottle} style={styles.touchableWaterBottle} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={scheduleNotification}>
-              <Text style={styles.buttonText}>Schedule Notification</Text>
-            </TouchableOpacity>
+            {message && <Text style={styles.messageText}>{message}</Text>}
+            <ScrollView style={styles.historyContainer}>
+              <View style={styles.historyRecord}>
+                <Text style={styles.historyDate}>
+                
+                  {new Date().toLocaleDateString(undefined, options)}
+                </Text>
+              </View>
+              {consumptionHistory.map((record, index) => (
+                <View key={index} style={styles.historyRecord}>
+                  <Text style={styles.historyText}>{record}</Text>
+                </View>
+              ))}
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={scheduleReminder}>
+                <Text style={styles.buttonText}>Schedule Reminder   </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={scheduleNotification}>
+                <Text style={styles.buttonText}>Schedule Notification</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -114,16 +125,15 @@ export default function Dashboard({ navigation }) {
         onRequestClose={toggleModal}
       >
         <View style={styles.modalContainer}>
-            
-          <Text style={styles.modalText}>Welcome</Text>
+          <Text style={styles.welcomeText}>Welcome</Text>
           <TouchableOpacity onPress={navigateToDashboard}>
-            <Text style={styles.buttonText}>Dashboard</Text>
+            <Text style={styles.modalText2}>Dashboard</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={navigateToHistory}>
-            <Text style={styles.buttonText}>History</Text>
+            <Text style={styles.modalText2}>History</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={navigateToSettings}>
-            <Text style={styles.buttonText}>Settings</Text>
+            <Text style={styles.modalText2}>Settings</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -134,6 +144,10 @@ export default function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   backgroundImage: {
     flex: 1,
@@ -147,7 +161,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-   
+    color: 'white',
     left: -165,
     top: 40,
     marginTop: 20,
@@ -156,6 +170,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     marginBottom: 10,
+    color: 'white',
   },
   meterContainer: {
     height: 300,
@@ -179,10 +194,12 @@ const styles = StyleSheet.create({
   consumedText: {
     fontSize: 18,
     marginTop: 10,
+    color: 'white',
   },
   goalText: {
     fontSize: 16,
     marginTop: 10,
+    color: 'white',
   },
   touchableWaterBottle: {
     width: 80,
@@ -205,9 +222,17 @@ const styles = StyleSheet.create({
   },
   historyRecord: {
     marginBottom: 10,
+    color: 'white',
+  },
+  historyDate: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   historyText: {
     fontSize: 16,
+    color: 'white',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -216,14 +241,25 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#8BADD3',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
     margin: 5,
   },
-  buttonText: {
+
+  welcomeText: {
     color: 'white',
+    fontSize: 30,
+  },
+
+  modalText2: {
+    color: 'white',
+    fontSize: 18,
+  },
+
+  buttonText: {
+    color: '#333',
     fontSize: 18,
   },
   modalContainer: {
