@@ -1,3 +1,5 @@
+//homepage.js
+
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 

@@ -1,3 +1,4 @@
+//goals.js
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import bot from '../assets/bot.png'
