@@ -1,54 +1,56 @@
-//username.js
+// username.js
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
-//assets
+// assets
 import logodrink from '../assets/logotrans.png';
 import bg from '../assets/bg.png';
 
-
-
 export default function Goals({ navigation }) {
   const [username, setUsername] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleContinue = () => {
+    if (username.trim() === '') {
+      // If username is empty, display an error message
+      setErrorMessage('Please enter a username.');
+    } else {
+      // If a username is entered, proceed to the next screen
+      setErrorMessage(''); // Clear any previous error message
+      navigation.navigate('Goals');
+    }
+  };
 
   return (
-    <ImageBackground
-      source={bg}
-      style={styles.container}
-    >
-        <View style={styles.overlay}>
-          <View style={styles.appContainer}>
-            <Image source={logodrink} style={styles.logo} />
-            <Text style={styles.headerMotto2}>Are you ready for ThirstApp?</Text>
-            <Text style={styles.headerMotto3}>First, what should we call you?</Text>
+    <ImageBackground source={bg} style={styles.container}>
+      <View style={styles.overlay}>
+        <View style={styles.appContainer}>
+          <Image source={logodrink} style={styles.logo} />
+          <Text style={styles.headerMotto2}>Are you ready for ThirstApp?</Text>
+          <Text style={styles.headerMotto3}>First, what should we call you?</Text>
 
-            <View style={styles.inputContainer}>
-              <View style={styles.inputBox}>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="    Enter your Username"
-                  onChangeText={(text) => setUsername(text)}
-                  value={username}
-                />
-              </View>
+          <View style={styles.inputContainer}>
+            <View style={styles.inputBox}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Enter your Username"
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+              />
             </View>
-
-          
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => navigation.navigate('Goals')}
-            >
-              <Text style={styles.addButtonLabel}>Let's Go!</Text>
-            </TouchableOpacity>
+            {errorMessage !== '' && <Text style={styles.errorText}>{errorMessage}</Text>}
           </View>
-          
-          
+
+          <TouchableOpacity style={styles.addButton} onPress={handleContinue}>
+            <Text style={styles.addButtonLabel}>Let's Go!</Text>
+          </TouchableOpacity>
         </View>
-        </ImageBackground>
-    
+      </View>
+    </ImageBackground>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -94,17 +96,8 @@ const styles = StyleSheet.create({
     
     color: "white",
   },
-  
-  //(HOME)Welcome to hydrate4Today
-  headerMotto: {
-    fontSize: 50,
-    
-    color: "white",
-    top: 55,
-    
-  },
 
-  //(HOME)started
+  // Are you ready for ThirstApp
   headerMotto2: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -112,13 +105,11 @@ const styles = StyleSheet.create({
     top: 50,
   },
 
-  //Stay hydrated
+  //First, what should we call you?
   headerMotto3: {
     fontSize: 20,
     color: "white",
     top: 70,
-   
-    
   },
 
   inputContainer: {
@@ -148,7 +139,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
 
-  //get started button
+  //Let's Go
   addButton: {
     backgroundColor: '#8BADD3', // Creamy aesthetic color
     
@@ -164,14 +155,6 @@ const styles = StyleSheet.create({
   addButtonLabel: {
     fontSize: 23,
     color: '#333', // Text color
-    
-    
-  },
-
-
-  headerLabel: {
-    fontSize: 30,
-    color: 'white', // Text color
   },
 
 
@@ -188,4 +171,12 @@ const styles = StyleSheet.create({
   goalText: {
     fontSize: 18,
   },
+
+  // Error message text
+  errorText: {
+    color: 'red',
+    marginTop: 10,
+  },
+
+
 });
