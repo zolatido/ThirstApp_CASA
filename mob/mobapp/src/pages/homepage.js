@@ -3,28 +3,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList, Image, ImageBackground,  TouchableOpacity } from 'react-native';
 
-
-
 //assets
 import logodrink from '../assets/logotrans.png';
-
 import bg from '../assets/bg.png';
 
 
 
 export default function Username({ navigation }) {
-  const [courseGoals, setCourseGoals] = useState([]);
-  const [enteredGoalText, setEnteredGoalText] = useState('');
-
-  function addGoalHandler() {
-    setCourseGoals((currentCourseGoals) => [
-      ...currentCourseGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
-    ]);
-    // Clear the input field
-    setEnteredGoalText('');
-  }
-
   return (
    
       <View style={styles.container}>
@@ -41,17 +26,13 @@ export default function Username({ navigation }) {
             <Text style={styles.headerMotto3}>-Arwen 2023</Text>
             <TouchableOpacity
               style={styles.addButton}
-              onPress={() => navigation.navigate('Username')}
-            >
+              onPress={() => navigation.navigate('Username')}>
               <Text style={styles.addButtonLabel}>Get Started</Text>
             </TouchableOpacity>
           </View>
-          
-          
         </View>
         </ImageBackground>
     </View>
-    
   );
 }
 
@@ -65,7 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)', 
   },
   
-
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -88,7 +68,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
- 
   
   //Hydrate Your Way to Health!
   headerMotto2: {
@@ -107,7 +86,7 @@ const styles = StyleSheet.create({
 
   //get started button
   addButton: {
-    backgroundColor: '#8BADD3', // Creamy aesthetic color
+    backgroundColor: '#8BADD3', 
     paddingVertical: 23,
     paddingHorizontal: 70,
     borderRadius: 10,
@@ -120,5 +99,4 @@ const styles = StyleSheet.create({
     fontSize: 23,
     color: '#333', // Text color
   },
-
 });
