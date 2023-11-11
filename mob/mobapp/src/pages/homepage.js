@@ -1,12 +1,13 @@
 //homepage.js
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, FlatList, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Image, ImageBackground,  TouchableOpacity } from 'react-native';
 
 
 
 //assets
 import logodrink from '../assets/logotrans.png';
+
 import bg from '../assets/bg.png';
 
 
@@ -45,16 +46,7 @@ export default function Username({ navigation }) {
               <Text style={styles.addButtonLabel}>Get Started</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.goalListContainer}>
-            <FlatList
-              data={courseGoals}
-              renderItem={(itemData) => (
-                <View style={styles.goalItems}>
-                  <Text style={styles.goalText}>{itemData.item.text}</Text>
-                </View>
-              )}
-            />
-          </View>
+          
           
         </View>
         </ImageBackground>
@@ -87,107 +79,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
-  headerContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-
 
   //baboy na umiinom
   logo: {
     height: 170, // size nung logo
     width:170, // size nung loge
-    top: 55,
+    top: 120,
     alignItems: 'center',
     
   },
  
-  headerText: {
-    fontSize: 24,
-    
-    color: "white",
-  },
   
-  //(HOME)Welcome to hydrate4Today
-  headerMotto: {
-    fontSize: 50,
-    
-    color: "white",
-    top: 55,
-    
-  },
-
-  //(HOME)started
+  //Hydrate Your Way to Health!
   headerMotto2: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     color: "white",
-    top: 50,
+    top: 140,
   },
 
-  //Stay hydrated
+  //-Arwen
   headerMotto3: {
-    fontSize: 15,
+    fontSize: 19,
     color: "white",
-    top: 60,
-   
-    
-  },
-
-  inputContainer: {
-    
-    alignItems: 'center',
-    marginBottom: 75,
-  },
-
-  //user input
-  textInput: {
-    flex: 1,
-    marginRight: 10,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    paddingVertical: 4,
-    paddingHorizontal: 2,
+    top: 160,
   },
 
   //get started button
   addButton: {
     backgroundColor: '#8BADD3', // Creamy aesthetic color
-    
     paddingVertical: 23,
     paddingHorizontal: 70,
     borderRadius: 10,
-    bottom: -150,
-    alignItems:'center',
-    
+    top: 200,
+    alignItems:'center', 
   },
 
-  //text sa button
+  //Get Started Text
   addButtonLabel: {
     fontSize: 23,
     color: '#333', // Text color
-    
-    
   },
 
-
-  headerLabel: {
-    fontSize: 30,
-    color: 'white', // Text color
-  },
-
-
-  goalListContainer: {
-    marginTop: 20,
-    
-  },
-  goalItems: {
-    backgroundColor: 'white',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-  },
-  goalText: {
-    fontSize: 18,
-  },
 });
