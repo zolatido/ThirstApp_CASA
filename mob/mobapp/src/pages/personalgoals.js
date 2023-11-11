@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard({ navigation, route }) {
   const handleButtonPress = (goalType) => {
     // Navigate to PersonalGoalsWeight screen with the selected goal type
-    navigation.navigate('PersonalWeight', { goalType });
+    navigation.navigate('PersonalWeight', { ...route.params, sports: goalType });
   };
 
   return (

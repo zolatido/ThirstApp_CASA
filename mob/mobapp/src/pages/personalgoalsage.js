@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } 
 //assets
 import bg from '../assets/bg.png';
 
-export default function PersonalAge({ navigation }) {
+export default function PersonalAge({ navigation, route }) {
   const [userinput, setCustom] = useState('');
   const [error, setError] = useState('');
 
@@ -19,7 +19,7 @@ export default function PersonalAge({ navigation }) {
     setError('');
 
     // Pass the custom goal to the Dashboard screen
-    navigation.navigate('Dashboard', { customGoal: userinput });
+    navigation.navigate('PersonalDailyGoal', { ...route.params, age: userinput });
   };
 
   return (
