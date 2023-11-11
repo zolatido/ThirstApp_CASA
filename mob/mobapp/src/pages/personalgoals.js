@@ -1,61 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
 
 export default function Dashboard({ navigation }) {
+  const handleButtonPress = (goalType) => {
+    // Navigate to PersonalGoalsWeight screen with the selected goal type
+    navigation.navigate('PersonalWeight', { goalType });
+  };
+
   return (
     <ImageBackground
-      source={require('/Users/Sanchez/Desktop/superlight.jpg')}
+      source={require('/Users/Sanchez/Desktop/bg.png')}
       style={styles.container}
     >
       <View style={styles.overlay}>
-
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate('Dashboard')}
-        >
-          <Text style={styles.addButtonLabel}>
-            Setup your personal water
-          </Text>
-          <Text style={styles.addButtonLabel}>
-            requirement in four steps
-          </Text>
-        </TouchableOpacity>
-
+        <Text style={styles.questionText}>How often do you do sports?</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.goalButton}
-            onPress={() => {
-              // Handle "Rarely" button click
-            }}
+            onPress={() => handleButtonPress('Rarely')}
           >
             <Text style={styles.goalButtonLabel}>Rarely</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.goalButton}
-            onPress={() => {
-              // Handle "Normal" button click
-            }}
+            onPress={() => handleButtonPress('Normal')}
           >
             <Text style={styles.goalButtonLabel}>Normal</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.goalButton}
-            onPress={() => {
-              // Handle "Often" button click
-            }}
+            onPress={() => handleButtonPress('Often')}
           >
             <Text style={styles.goalButtonLabel}>Often</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.goalButton}
-            onPress={() => {
-              // Handle "Very Often" button click
-            }}
+            onPress={() => handleButtonPress('Always')}
           >
-            <Text style={styles.goalButtonLabel}>Very Often</Text>
+            <Text style={styles.goalButtonLabel}>Always</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -69,8 +54,11 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center', // Center the content vertically
+    alignItems: 'center', // Center the content horizontally
   },
+
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -78,54 +66,38 @@ const styles = StyleSheet.create({
     marginTop: -200,
     marginLeft: 20,
   },
-  logoContainer: {
-    marginRight: 10,
-  },
+
   logo: {
     height: 140,
     width: 140,
   },
-  headerText: {
-    fontSize: 30,
-    fontWeight: 'bold',
+
+  questionText: {
+    fontSize: 20,
     color: 'white',
+    marginBottom: 20,
   },
-  inputContainer: {
-    alignItems: 'center',
-    bottom: 40,
-    marginBottom: 30,
-    paddingHorizontal: 50,
-    paddingVertical: 10,
-  },
-  addButton: {
-    backgroundColor: '#8BADD3',
-    paddingVertical: 30,
-    paddingHorizontal: 30,
-    borderRadius: 30,
-    bottom: 170,
-    alignItems: 'center',
-  },
-  addButtonLabel: {
-    fontSize: 15,
-    color: '#333',
-    fontWeight: 'bold',
-  },
+
   buttonContainer: {
-    flexDirection: 'column', // Change to 'column' to line up buttons vertically
-    alignItems: 'center', // Align items in the center
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 20,
   },
+
   goalButton: {
     backgroundColor: '#8BADD3',
-    paddingVertical: 20, // Adjust the height of the button
-    paddingHorizontal: 30, // Adjust the width of the button
+    height: 80,
+    width: 200,
     borderRadius: 30,
     alignItems: 'center',
-    marginVertical: 10, // Add some vertical spacing between buttons
+    justifyContent: 'center', // Center the text vertically
+    marginVertical: 10,
   },
+
   goalButtonLabel: {
     fontSize: 16,
     color: '#333',
     fontWeight: 'bold',
+    textAlign: 'center', // Center the text horizontally
   },
 });
