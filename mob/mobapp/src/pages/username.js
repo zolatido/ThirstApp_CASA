@@ -34,7 +34,7 @@ export default function Goals({ navigation }) {
             <View style={styles.inputBox}>
               <TextInput
                 style={styles.textInput}
-                placeholder="Enter your Username"
+                placeholder="    Enter your Username"
                 onChangeText={(text) => setUsername(text)}
                 value={username}
               />
@@ -76,11 +76,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
-  headerContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-
 
   //baboy na umiinom
   logo: {
@@ -91,12 +86,6 @@ const styles = StyleSheet.create({
     
   },
  
-  headerText: {
-    fontSize: 24,
-    
-    color: "white",
-  },
-
   // Are you ready for ThirstApp
   headerMotto2: {
     fontSize: 24,
@@ -119,6 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     paddingVertical: 10,
   },
+
   inputBox: {
     borderWidth: 0,
     borderColor: 'white',
@@ -141,8 +131,7 @@ const styles = StyleSheet.create({
 
   //Let's Go
   addButton: {
-    backgroundColor: '#8BADD3', // Creamy aesthetic color
-    
+    backgroundColor: '#8BADD3', 
     paddingVertical: 23,
     paddingHorizontal: 70,
     borderRadius: 10,
@@ -155,21 +144,6 @@ const styles = StyleSheet.create({
   addButtonLabel: {
     fontSize: 23,
     color: '#333', // Text color
-  },
-
-
-  goalListContainer: {
-    marginTop: 20,
-    
-  },
-  goalItems: {
-    backgroundColor: 'white',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-  },
-  goalText: {
-    fontSize: 18,
   },
 
   // Error message text
