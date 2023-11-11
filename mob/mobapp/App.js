@@ -12,9 +12,13 @@ import Goals from './src/pages/goals';
 import Dashboard from './src/pages/dashboard'; 
 import Custom from './src/pages/customgoals'; 
 import Personal from './src/pages/personalgoals';
+import PersonalWeight from './src/pages/personalgoalsweight';
+import PersonalAge from './src/pages/personalgoalsage';
+import PersonalDailyGoal from './src/pages/personalgoalsdaily';
 import Username from './src/pages/username';
 import History from './src/pages/history';
 import Settings from './src/pages/settings';
+
 
 const Stack = createStackNavigator();
 //const Tab = createMaterialTopTabNavigator();
@@ -23,7 +27,7 @@ function App() {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator >
+      <Stack.Navigator initialRouteName='Personal'>
         
 
         <Stack.Screen
@@ -70,6 +74,30 @@ function App() {
         <Stack.Screen
           name="Personal"
           component={Personal}
+          options={{
+            headerShown: false, // Hide the header bar
+          }}
+        />
+
+        <Stack.Screen
+          name="PersonalWeight"
+          component={PersonalWeight}
+          options={{
+            headerShown: false, // Hide the header bar
+          }}
+        />
+
+        <Stack.Screen
+          name="PersonalAge"
+          component={PersonalAge}
+          options={{
+            headerShown: false, // Hide the header bar
+          }}
+        />
+
+        <Stack.Screen
+          name="PersonalDailyGoal"
+          component={PersonalDailyGoal}
           options={{
             headerShown: false, // Hide the header bar
           }}
