@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
-
 //assets
-import bg from '../assets/superlight.jpg';
+import bg from '../assets/bg.png';
 
 export default function CustomGoals({ navigation }) {
   const [userinput, setCustom] = useState('');
@@ -22,7 +21,7 @@ export default function CustomGoals({ navigation }) {
           <View style={styles.inputBox}>
             <TextInput
               style={[styles.textInput, !userinput && styles.placeholder]}
-              placeholder="Enter your Drink Goal"
+              placeholder="Enter your Drinking Goal"
               onChangeText={(text) => {
                 text = text.replace(/[^0-9]/g, '').slice(0, 4);
                 setCustom(text);
@@ -34,7 +33,7 @@ export default function CustomGoals({ navigation }) {
           </View>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('Dashboard')}
+            onPress={setCustomGoal}
           >
             <Text style={styles.addButtonLabel}>Finish</Text>
           </TouchableOpacity>
@@ -48,43 +47,54 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
+
   inputContainer: {
     alignItems: 'center',
-    top: 175,
+    top: 300,
     marginBottom: 30,
-    paddingHorizontal: 50,
-    paddingVertical: 10,
+    paddingHorizontal: 70,
+    paddingVertical: 20,
   },
+
   inputBox: {
     flexDirection: 'row',
     borderBottomWidth: 2,
     borderColor: 'white',
     alignItems: 'center',
   },
+
   textInput: {
     flex: 1,
-    color: 'black',
+    fontSize:20,
+    color: 'white',
     paddingVertical: 10,
   },
+
+  //Enter your drinking goal
   placeholder: {
-    color: 'white',
+    color: 'gray',
   },
+
+  //ml
   mlText: {
-    color: 'black',
+    color: 'white',
     fontSize: 18,
   },
+
   addButton: {
     backgroundColor: '#A3D7E7',
     paddingVertical: 23,
     paddingHorizontal: 50,
     borderRadius: 10,
-    top: 150,
+    top: 130,
     alignItems: 'center',
   },
+
   addButtonLabel: {
     fontSize: 18,
     color: '#333',
