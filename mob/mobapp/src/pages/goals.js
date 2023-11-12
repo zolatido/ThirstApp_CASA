@@ -1,5 +1,5 @@
 //goals.js
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import bot from '../assets/bot.png'
 import logodrink from '../assets/logotrans.png'
