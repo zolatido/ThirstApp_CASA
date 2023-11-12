@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-//assets
+// assets
 import bg from '../assets/bg.png';
 
-export default function PersonalAge({ navigation, route }) {
+export default function PersonalAge({ route }) {
+  const navigation = useNavigation();
   const [userinput, setCustom] = useState('');
   const [error, setError] = useState('');
 
@@ -22,9 +25,17 @@ export default function PersonalAge({ navigation, route }) {
     navigation.navigate('PersonalDailyGoal', { ...route.params, age: userinput });
   };
 
+  const goBackToPersonalWeight = () => {
+    // Navigate back to the PersonalWeight screen
+    navigation.navigate('PersonalWeight');
+  };
+
   return (
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
+        <TouchableOpacity style={styles.backButton} onPress={goBackToPersonalWeight}>
+          <ArrowBackIcon style={styles.backButtonIcon} />
+        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <View style={styles.inputBox}>
             <TextInput
@@ -39,7 +50,7 @@ export default function PersonalAge({ navigation, route }) {
             />
             <Text style={styles.kgText}>YEARS</Text>
           </View>
-          
+
           <TouchableOpacity
             style={styles.addButton}
             onPress={setCustomGoal}
@@ -64,6 +75,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
 
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
+  },
+
+  backButtonIcon: {
+    fontSize: 24,
+    color: 'white',
+  },
+
   inputContainer: {
     alignItems: 'center',
     top: 300,
@@ -81,17 +105,17 @@ const styles = StyleSheet.create({
 
   textInput: {
     flex: 1,
-    fontSize:20,
+    fontSize: 20,
     color: 'white',
     paddingVertical: 10,
   },
 
-  //Enter your drinking goal
+  // Enter your drinking goal
   placeholder: {
     color: 'gray',
   },
 
-  //kg
+  // kg
   kgText: {
     color: 'white',
     fontSize: 18,
@@ -116,5 +140,4 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 10,
   },
-
 });

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // assets
 import logodrink from '../assets/logotrans.png';
@@ -8,6 +10,7 @@ import bg from '../assets/bg.png';
 export default function PersonalDailyGoal({ route, navigation }) {
   const [dailyGoal, setDailyGoal] = useState(0); // Initialize with 0 or the default value
   const [calculatedGoal, setCalculatedGoal] = useState(0); // Store the calculated goal
+  
 
   // Function to calculate the total daily water intake based on the provided formula
   const calculateDailyGoal = (weight, age, playFrequency) => {
@@ -64,12 +67,19 @@ export default function PersonalDailyGoal({ route, navigation }) {
     // Navigate to the Dashboard screen and pass the stored calculated daily goal in milliliters
     navigation.navigate('Dashboard', { customGoal: dailyGoalInMilliliters });
   };
-  
+
+  const goBackToPersonalAge = () => {
+    // Navigate back to the PersonalAge screen
+    navigation.navigate('PersonalAge');
+  };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
         <View style={styles.overlay}>
+          <TouchableOpacity style={styles.backButton} onPress={goBackToPersonalAge}>
+            <ArrowBackIcon style={styles.backButtonIcon} />
+          </TouchableOpacity>
           <View style={styles.appContainer}>
             <Image source={logodrink} style={styles.logo} />
             <Text style={styles.headerMotto2}>Your Daily Goal is {dailyGoal} L</Text>
@@ -101,25 +111,34 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
 
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
+  },
+
+  backButtonIcon: {
+    fontSize: 24,
+    color: 'white',
+  },
+
   appContainer: {
     flex: 1,
     paddingTop: 50,
     paddingBottom: 50,
     paddingHorizontal: 16,
     alignItems: 'center',
-    
   },
 
-  //baboy na umiinom
   logo: {
     height: 170, // size nung logo
     width:170, // size nung loge
     top: 120,
     alignItems: 'center',
-    
   },
-  
-  //Hydrate Your Way to Health!
+
   headerMotto2: {
     fontSize: 26,
     fontWeight: 'bold',

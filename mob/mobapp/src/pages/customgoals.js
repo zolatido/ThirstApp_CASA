@@ -1,22 +1,42 @@
-//customgoals.js
+// customgoals.js
 
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-//assets
+// assets
 import bg from '../assets/bg.png';
 
-export default function CustomGoals({ navigation }) {
+export default function CustomGoals() {
+  const navigation = useNavigation();
   const [userinput, setCustom] = useState('');
+  const [error, setError] = useState('');
 
   const setCustomGoal = () => {
+    // Check if userinput is empty
+    if (!userinput) {
+      setError('Please enter your drinking goal.');
+      return;
+    }
+
+    // Clear any previous error
+    setError('');
+
     // Pass the custom goal to the Dashboard screen
     navigation.navigate('Dashboard', { customGoal: userinput });
+  };
+
+  const goBack = () => {
+    navigation.goBack();
   };
 
   return (
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
+        <TouchableOpacity style={styles.backButton} onPress={goBack}>
+          <ArrowBackIcon style={styles.backButtonIcon} />
+        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <View style={styles.inputBox}>
             <TextInput
@@ -31,12 +51,11 @@ export default function CustomGoals({ navigation }) {
             />
             <Text style={styles.mlText}>ML</Text>
           </View>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={setCustomGoal}
-          >
+          <TouchableOpacity style={styles.addButton} onPress={setCustomGoal}>
             <Text style={styles.addButtonLabel}>Finish</Text>
           </TouchableOpacity>
+
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
         </View>
       </View>
     </ImageBackground>
@@ -51,6 +70,19 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  },
+
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
+  },
+
+  backButtonIcon: {
+    fontSize: 24,
+    color: 'white',
   },
 
   inputContainer: {
@@ -70,24 +102,24 @@ const styles = StyleSheet.create({
 
   textInput: {
     flex: 1,
-    fontSize:20,
+    fontSize: 20,
     color: 'white',
     paddingVertical: 10,
   },
 
-  //Enter your drinking goal
+  // Enter your drinking goal
   placeholder: {
     color: 'gray',
   },
 
-  //ml
+  // ml
   mlText: {
     color: 'white',
     fontSize: 18,
   },
 
   addButton: {
-    backgroundColor: '#A3D7E7',
+    backgroundColor: '#8BADD3',
     paddingVertical: 23,
     paddingHorizontal: 50,
     borderRadius: 10,
@@ -98,5 +130,11 @@ const styles = StyleSheet.create({
   addButtonLabel: {
     fontSize: 18,
     color: '#333',
+  },
+
+  // Error message text
+  errorText: {
+    color: 'red',
+    marginTop: 10,
   },
 });

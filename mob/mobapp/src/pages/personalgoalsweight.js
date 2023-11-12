@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // assets
 import bg from '../assets/bg.png';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function PersonalWeight({ navigation, route }) {
+export default function PersonalWeight({ route }) {
+  const navigation = useNavigation();
   const [userinput, setCustom] = useState('');
   const [error, setError] = useState('');
 
@@ -22,16 +25,24 @@ export default function PersonalWeight({ navigation, route }) {
     navigation.navigate('PersonalAge', { ...route.params, weight: parseFloat(userinput) });
   };
 
+  const goBackToPersonal = () => {
+    // Navigate back to the Personal screen
+    navigation.navigate('Personal');
+  };
+
   return (
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
+        <TouchableOpacity style={styles.backButton} onPress={goBackToPersonal}>
+        <ArrowBackIcon style={styles.backButtonIcon} />
+        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <View style={styles.inputBox}>
             <TextInput
               style={[styles.textInput, !userinput && styles.placeholder]}
               placeholder="Enter your Weight"
               onChangeText={(text) => {
-                // Allow only numbers with decimal
+                // Allow only numbers with a decimal point
                 text = text.replace(/[^0-9.]/g, '');
                 setCustom(text);
               }}
@@ -64,6 +75,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
 
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
+  },
+
+  backButtonIcon: {
+    fontSize: 24,
+    color: 'white',
+  },
+
   inputContainer: {
     alignItems: 'center',
     top: 300,
@@ -86,12 +110,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  //Enter your drinking goal
+  // Enter your drinking goal
   placeholder: {
     color: 'gray',
   },
 
-  //kg
+  // kg
   kgText: {
     color: 'white',
     fontSize: 18,

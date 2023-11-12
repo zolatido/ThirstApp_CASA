@@ -1,10 +1,19 @@
 import React from 'react';
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function Dashboard({ navigation, route }) {
+export default function Dashboard({ route }) {
+  const navigation = useNavigation();
+
   const handleButtonPress = (goalType) => {
     // Navigate to PersonalGoalsWeight screen with the selected goal type
     navigation.navigate('PersonalWeight', { ...route.params, sports: goalType });
+  };
+
+  const goBackToDashboard = () => {
+    // Navigate back to the Dashboard screen
+    navigation.navigate('Goals');
   };
 
   return (
@@ -13,6 +22,10 @@ export default function Dashboard({ navigation, route }) {
       style={styles.container}
     >
       <View style={styles.overlay}>
+        <TouchableOpacity style={styles.backButton} onPress={goBackToDashboard}>
+          <ArrowBackIcon style={styles.backButtonIcon} />
+        </TouchableOpacity>
+
         <Text style={styles.questionText}>How often do you do sports?</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -63,17 +76,17 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center the content horizontally
   },
 
-  headerContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: -200,
-    marginLeft: 20,
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
   },
 
-  logo: {
-    height: 140,
-    width: 140,
+  backButtonIcon: {
+    fontSize: 24,
+    color: 'white',
   },
 
   questionText: {
