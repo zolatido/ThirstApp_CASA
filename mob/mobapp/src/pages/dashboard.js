@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal} from 'react-native';
+import HomeIcon from '@mui/icons-material/Home';
 
+import NavigationBar from '../components/navigationbar';
 
 //assets
 import DehazeIcon from '@mui/icons-material/Dehaze';
@@ -24,12 +26,13 @@ export default function Dashboard({ navigation, route }) {
   };
 
 
-  const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
+  //const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
  
 
-  // Use the custom goal if available, otherwise use the default
-  const customGoal = route.params ? route.params.customGoal : null;
-  const dailyGoalcustom = customGoal ? parseInt(customGoal, 10) : dailyGoals[selectedBottleSize];
+    // Use the custom goal if available, otherwise use the default
+    const customGoal = route.params ? route.params.customGoal : null;
+    const dailyGoal = customGoal ? parseFloat(customGoal, 10) : dailyGoals[selectedBottleSize];
+  
 
 
 
