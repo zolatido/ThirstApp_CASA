@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     alignItems: 'center',
-    top: 120,
+    top: 150,
     marginBottom: 5,
     // paddingHorizontal: 80,
     // paddingVertical: 1,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     paddingVertical: 23,
     paddingHorizontal: 70,
     borderRadius: 10,
-    bottom: -150,
+    top: 180,
     alignItems:'center',
     
   },
