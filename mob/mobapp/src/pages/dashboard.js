@@ -1,15 +1,17 @@
 //dashboard.js
 
 import React, { useState } from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal} from 'react-native';
-import HomeIcon from '@mui/icons-material/Home';
-
-import NavigationBar from '../components/navigationbar';
+import { View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal, Platform } from 'react-native';
+import LottieView from 'lottie-react-native';
+import ImagePicker from 'react-native-image-picker';
 
 //assets
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import bg from '../assets/bg.png';
 import bottle from '../assets/bottle.png';
+import circlemeter from '../assets/circlemeter.json';
+
+
 
 export default function Dashboard({ navigation, route }) {
   // Get the selected bottle size from the navigation parameters
@@ -97,6 +99,32 @@ export default function Dashboard({ navigation, route }) {
     navigation.navigate('Settings');  
   };
 
+  const [userImage, setUserImage] = useState(null);
+
+  const openImagePicker = () => {
+    if (Platform.OS !== 'web') {
+      const options = {
+        title: 'Select Profile Picture',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+  
+      ImagePicker.showImagePicker(options, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          setUserImage(response.uri);
+        }
+      });
+    } else {
+      console.log('ImagePicker is not available on the web platform');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
@@ -154,6 +182,10 @@ export default function Dashboard({ navigation, route }) {
         onRequestClose={toggleModal}
       >
         <View style={styles.modalContainer}>
+          {/* Circular container for user profile picture */}
+          <View style={styles.profileImageContainer}>
+              {userImage && <Image source={{ uri: userImage }} style={styles.profileImage} />}
+            </View>
           <Text style={styles.welcomeText}>Welcome</Text>
           <TouchableOpacity onPress={navigateToDashboard}>
             <Text style={styles.modalText2}>Dashboard</Text>
@@ -231,8 +263,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   touchableWaterBottle: {
-    width: 80,
-    height: 160,
+    width: 50,
+    height: 130,
     marginTop: 20,
   },
   messageText: {
@@ -265,7 +297,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around', 
     marginTop: 20,
   },
   button: {
@@ -274,7 +306,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
-    margin: 5,
+    marginHorizontal: 5,
   },
 
   welcomeText: {
@@ -290,7 +322,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#333',
     fontSize: 18,
+    textAlign: 'center', 
   },
+
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -302,4 +336,18 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 20,
   },
+
+  profileImageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginTop: 20,
+  },
+  profileImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
+
 });
