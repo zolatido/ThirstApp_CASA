@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import HomePage from './src/pages/homepage';
-import Registration from './src/pages/registration'; 
+//import Registration from './src/pages/registration'; 
 import Goals from './src/pages/goals'; 
 import Dashboard from './src/pages/dashboard'; 
 import Custom from './src/pages/customgoals'; 
@@ -27,7 +27,7 @@ function App() {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Personal'>
+      <Stack.Navigator>
         
 
         <Stack.Screen
@@ -118,19 +118,8 @@ function App() {
             headerShown: false, // Hide the header bar
           }}
         />
-
-        <Stack.Screen
-          name="Registration"
-          component={Registration}
-          options={{
-            headerShown: false, // Hide the header bar
-          }}
-        />
         
-      </Stack.Navigator>
-
-
-      
+      </Stack.Navigator> 
       
     </NavigationContainer>
   );
