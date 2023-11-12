@@ -126,9 +126,10 @@ const styles = StyleSheet.create({
   //user input
   textInput: {
     // flex: 1,
+    fontSize: 20,
     marginRight: 10,
     borderBottomWidth: 2,
-    color: 'white',
+    color: 'gray',
     borderColor: 'white',
     // paddingVertical: 0,
     // paddingHorizontal:10,
