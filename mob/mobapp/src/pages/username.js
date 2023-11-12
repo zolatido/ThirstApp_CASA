@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     top: 150,
     marginBottom: 5,
+    alignItems: 'center',
     // paddingHorizontal: 80,
     // paddingVertical: 1,
   },
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   //user input
   textInput: {
     // flex: 1,
-    fontSize: 20,
+    fontSize: 17,
     marginRight: 10,
     borderBottomWidth: 2,
     color: 'gray',
