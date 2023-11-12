@@ -1,17 +1,14 @@
 //dashboard.js
 
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal, Platform } from 'react-native';
-import LottieView from 'lottie-react-native';
-import ImagePicker from 'react-native-image-picker';
+import {View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal, TextInput, Picker} from 'react-native';
+
 
 //assets
+import DateTimePicker from '@react-native-community/datetimepicker';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import bg from '../assets/bg.png';
 import bottle from '../assets/bottle.png';
-import circlemeter from '../assets/circlemeter.json';
-
-
 
 export default function Dashboard({ navigation, route }) {
   // Get the selected bottle size from the navigation parameters
@@ -28,13 +25,12 @@ export default function Dashboard({ navigation, route }) {
   };
 
 
-  //const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
+  const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
  
 
-    // Use the custom goal if available, otherwise use the default
-    const customGoal = route.params ? route.params.customGoal : null;
-    const dailyGoal = customGoal ? parseFloat(customGoal, 10) : dailyGoals[selectedBottleSize];
-  
+  // Use the custom goal if available, otherwise use the default
+  const customGoal = route.params ? route.params.customGoal : null;
+  const dailyGoalcustom = customGoal ? parseInt(customGoal, 10) : dailyGoals[selectedBottleSize];
 
 
 
@@ -43,8 +39,11 @@ export default function Dashboard({ navigation, route }) {
   const [message, setMessage] = useState(null);
   const [consumptionHistory, setConsumptionHistory] = useState([]);
   const [meterFill, setMeterFill] = useState(0);
+  const [isHeaderModalVisible, setHeaderModalVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [reminderTime, setReminderTime] = useState('');
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
 
 
@@ -65,12 +64,31 @@ export default function Dashboard({ navigation, route }) {
     setConsumptionHistory([newRecord, ...consumptionHistory]);
   };
   
-
-  const scheduleReminder = () => {
-    // Schedule Reminder
+  const toggleHeaderModal = () => {
+    setHeaderModalVisible(!isHeaderModalVisible);
   };
-  const scheduleNotification = () => {
-    // Schedule Notification
+
+  const closeHeaderModal = () => {
+    setHeaderModalVisible(false);
+  };
+
+  const setReminder = () => {
+    // Set Reminder
+    setModalVisible(true);
+  };
+  const handleTimePicker = () => {
+    setShowTimePicker(true);
+  };
+  const handleTimeChange = (event, selectedTime) => {
+    if (selectedTime) {
+      const formattedTime = `${selectedTime.getHours()}:${selectedTime.getMinutes()}`;
+      setReminderTime(formattedTime);
+    }
+
+    setShowTimePicker(false);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   const toggleModal = () => {
@@ -83,46 +101,23 @@ export default function Dashboard({ navigation, route }) {
 
   // Navigate to Dashboard 
   const navigateToDashboard = () => {
+    closeHeaderModal();
     setModalVisible(false); // Close modal
     navigation.navigate('Dashboard'); 
   };
 
   // Navigate to History 
   const navigateToHistory = () => {
+    closeHeaderModal();
     setModalVisible(false); // Close modal
     navigation.navigate('History'); 
   };
 
   // Navigate to Settings
   const navigateToSettings = () => {
+    closeHeaderModal();
     setModalVisible(false); // Close modal
     navigation.navigate('Settings');  
-  };
-
-  const [userImage, setUserImage] = useState(null);
-
-  const openImagePicker = () => {
-    if (Platform.OS !== 'web') {
-      const options = {
-        title: 'Select Profile Picture',
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
-      };
-  
-      ImagePicker.showImagePicker(options, (response) => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          setUserImage(response.uri);
-        }
-      });
-    } else {
-      console.log('ImagePicker is not available on the web platform');
-    }
   };
 
   return (
@@ -131,10 +126,12 @@ export default function Dashboard({ navigation, route }) {
         <View style={styles.overlay}>
           <View style={styles.appContainer}>
             <View style={styles.headerContainer}>
-              <TouchableOpacity onPress={toggleModal}>
+              <TouchableOpacity onPress={toggleHeaderModal}>
                 <DehazeIcon/>
               </TouchableOpacity>
             </View>
+           </View> 
+          
             <Text style={styles.header}>Quench Your Thirsts</Text>
             <View style={styles.meterContainer}>
               <View style={styles.meter}>
@@ -161,31 +158,20 @@ export default function Dashboard({ navigation, route }) {
               ))}
             </ScrollView>
             <View style={styles.buttonContainer}>
-
-          
-              <TouchableOpacity style={styles.button} onPress={scheduleReminder}>
-                <Text style={styles.buttonText}>Schedule Reminder   </Text>
+              <TouchableOpacity style={styles.button} onPress={setReminder}>
+                <Text style={styles.buttonText}>Set Reminder</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={scheduleNotification}>
-                <Text style={styles.buttonText}>Schedule Notification</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        </View>
-      </ImageBackground>
+      
       <Modal
         transparent={true}
-        visible={isModalVisible}
+        visible={isHeaderModalVisible}
         onBackdropPress={closeSlideInModal}
         animationIn="slideInLeft"
         animationOut="slideOutLeft"
         onRequestClose={toggleModal}
       >
-        <View style={styles.modalContainer}>
-          {/* Circular container for user profile picture */}
-          <View style={styles.profileImageContainer}>
-              {userImage && <Image source={{ uri: userImage }} style={styles.profileImage} />}
-            </View>
+        <View style={styles.modalContainer1}>
           <Text style={styles.welcomeText}>Welcome</Text>
           <TouchableOpacity onPress={navigateToDashboard}>
             <Text style={styles.modalText2}>Dashboard</Text>
@@ -198,6 +184,52 @@ export default function Dashboard({ navigation, route }) {
           </TouchableOpacity>
         </View>
       </Modal>
+      <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+              <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalText3}>Set Reminder Time</Text>
+                  <View style={styles.pickerContainer}>
+                  <Picker
+                        selectedValue={reminderTime}
+                        onValueChange={(itemValue) => setReminderTime(itemValue)}
+                        style={styles.picker}
+                        textstyle={styles.pickerContainer}
+                      >
+                        <Picker.Item label="Select Time" value="" />
+                        <Picker.Item label="12:00 AM" value="0:00" />
+                        <Picker.Item label="1:00 AM" value="1:00" />
+                        <Picker.Item label="2:00 AM" value="2:00" />
+                        <Picker.Item label="3:00 AM" value="3:00" />
+                        <Picker.Item label="4:00 AM" value="4:00" />
+                        <Picker.Item label="5:00 AM" value="5:00" />
+                        <Picker.Item label="6:00 AM" value="6:00" />
+                        <Picker.Item label="7:00 AM" value="7:00" />
+                        <Picker.Item label="8:00 AM" value="8:00" />
+                        <Picker.Item label="9:00 AM" value="9:00" />
+                        <Picker.Item label="10:00 AM" value="10:00" />
+                        <Picker.Item label="11:00 AM" value="11:00" />
+                        <Picker.Item label="12:00 PM" value="12:00" />
+                        <Picker.Item label="1:00 PM" value="13:00" />
+                        <Picker.Item label="2:00 PM" value="14:00" />
+                        <Picker.Item label="3:00 PM" value="15:00" />
+                        <Picker.Item label="4:00 PM" value="16:00" />
+                        <Picker.Item label="5:00 PM" value="17:00" />
+                        <Picker.Item label="6:00 PM" value="18:00" />
+                        <Picker.Item label="7:00 PM" value="19:00" />
+                        <Picker.Item label="8:00 PM" value="20:00" />
+                        <Picker.Item label="9:00 PM" value="21:00" />
+                        <Picker.Item label="10:00 PM" value="22:00" />
+                        <Picker.Item label="11:00 PM" value="23:00" />
+                      </Picker>
+                    </View>
+                  <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                  <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity> 
+            </View>
+          </View>
+           </Modal> 
+           </View>
+           </ImageBackground>
     </View>
   );
 }
@@ -209,6 +241,7 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    resizeMode: 'cover',
   },
   backgroundImage: {
     flex: 1,
@@ -229,8 +262,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   header: {
-    fontSize: 25,
-    marginBottom: 50,
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: 'center',
     color: 'white',
   },
   meterContainer: {
@@ -238,6 +272,7 @@ const styles = StyleSheet.create({
     width: 300,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   meter: {
     width: 200,
@@ -251,26 +286,38 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     position: 'absolute',
     bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   consumedText: {
     fontSize: 18,
     marginTop: 10,
     color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   goalText: {
     fontSize: 16,
     marginTop: 10,
     color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   touchableWaterBottle: {
-    width: 50,
-    height: 130,
+    width: 40,
+    height: 100,
     marginTop: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   messageText: {
     fontSize: 18,
     color: 'green',
     marginTop: 10,
+    alignSelf: 'center',
   },
   historyContainer: {
     maxHeight: 200,
@@ -280,6 +327,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
+    alignSelf: 'center',
   },
   historyRecord: {
     marginBottom: 10,
@@ -297,16 +345,18 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around', 
+    justifyContent: 'space-between',
     marginTop: 20,
+    alignSelf: 'center',
   },
   button: {
     flex: 1,
     backgroundColor: '#8BADD3',
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
-    marginHorizontal: 5,
+    alignItems: 'center', // Center the content horizontally
+    justifyContent: 'center', // Center the content vertically
+    margin: 5,
   },
 
   welcomeText: {
@@ -317,18 +367,19 @@ const styles = StyleSheet.create({
   modalText2: {
     color: 'white',
     fontSize: 18,
+    alignItems: 'left',
+    justifyContent: 'center',
   },
 
   buttonText: {
     color: '#333',
     fontSize: 18,
-    textAlign: 'center', 
   },
-
-  modalContainer: {
+  modalContainer1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'left',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   modalText: {
@@ -336,18 +387,75 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 20,
   },
-
-  profileImageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: 'hidden',
+  button: {
+    backgroundColor: '#8BADD3', 
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: '#333', 
+    fontSize: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    fontSize: 50,
+  },
+  modalText3: {
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 20,
+    fontWeight: 'bold',
+  },
+  modalContent: {
+    backgroundColor: '#8BADD3',
+    padding: 60,
+    borderRadius: 10,
+    alignItems: 'center',
+    fontSize: 50,
+  },
+  pickerContainer: {
+    marginTop: 5,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10, 
+    fontSize: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  picker: {
+    height: '100%',
+    width: '100%',
+    fontSize: 12,
+    alignSelf: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    paddingHorizontal: 10,
     marginTop: 20,
   },
-  profileImage: {
-    flex: 1,
-    width: null,
-    height: null,
+  closeButton: {
+    marginTop: 20,
   },
-
+  closeButtonText: {
+    color: 'red',
+    fontSize: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '80%',
+  },
 });
