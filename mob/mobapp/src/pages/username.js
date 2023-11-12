@@ -1,7 +1,7 @@
 // username.js
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Image, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 // assets
 import logodrink from '../assets/logotrans.png';
@@ -23,6 +23,8 @@ export default function Goals({ navigation }) {
   };
 
   return (
+    <KeyboardAvoidingView 
+    style={styles.safeContainer}>
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
         <View style={styles.appContainer}>
@@ -48,11 +50,15 @@ export default function Goals({ navigation }) {
         </View>
       </View>
     </ImageBackground>
+    </KeyboardAvoidingView>
   );
 }
 
 
 const styles = StyleSheet.create({
+  safeContainer: {
+    flex:1,
+  },
   container: {
     flex: 1,
   },
@@ -105,27 +111,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     top: 120,
     marginBottom: 5,
-    paddingHorizontal: 50,
-    paddingVertical: 10,
+    // paddingHorizontal: 80,
+    // paddingVertical: 1,
   },
 
   inputBox: {
     borderWidth: 0,
     borderColor: 'white',
     borderRadius: 6,
-    paddingHorizontal: 50,
-    paddingVertical: 20,
+    // paddingHorizontal: 8,
+    // paddingVertical: 8,
   },
 
   //user input
   textInput: {
-    flex: 1,
+    // flex: 1,
     marginRight: 10,
     borderBottomWidth: 2,
     color: 'white',
     borderColor: 'white',
-    paddingVertical: 15,
-    paddingHorizontal:10,
+    // paddingVertical: 0,
+    // paddingHorizontal:10,
     alignContent: 'center',
   },
 
