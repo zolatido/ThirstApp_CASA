@@ -135,7 +135,7 @@ export default function Dashboard({ navigation, route }) {
                 <DehazeIcon/>
               </TouchableOpacity>
             </View>
-            <Text style={styles.header}>Water Consumption Dashboard</Text>
+            <Text style={styles.header}>Quench Your Thirsts</Text>
             <View style={styles.meterContainer}>
               <View style={styles.meter}>
                 <View style={[styles.fill, { height: `${meterFill}%` }]} />
@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   header: {
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: 25,
+    marginBottom: 50,
     color: 'white',
   },
   meterContainer: {
