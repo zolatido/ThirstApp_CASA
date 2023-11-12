@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   //user input
   textInput: {
     // flex: 1,
-    fontSize: 17,
+    fontSize: 20,
     marginRight: 10,
     borderBottomWidth: 2,
     color: 'gray',
