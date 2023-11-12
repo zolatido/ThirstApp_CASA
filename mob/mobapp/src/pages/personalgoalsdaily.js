@@ -7,6 +7,7 @@ import bg from '../assets/bg.png';
 
 export default function PersonalDailyGoal({ route, navigation }) {
   const [dailyGoal, setDailyGoal] = useState(0); // Initialize with 0 or the default value
+  const [calculatedGoal, setCalculatedGoal] = useState(0); // Store the calculated goal
 
   // Function to calculate the total daily water intake based on the provided formula
   const calculateDailyGoal = (weight, age, playFrequency) => {
@@ -35,10 +36,16 @@ export default function PersonalDailyGoal({ route, navigation }) {
         activityLevelAdjustment = 1.0; // Default to Normal if playFrequency is not recognized
     }
 
-    // Total Daily Water Intake
+    // Total Daily Water Intake in milliliters
     const totalDailyWaterIntake = baseWaterIntake * activityLevelAdjustment;
 
-    return totalDailyWaterIntake;
+    // Convert milliliters to liters and round to 3 decimal places
+    const totalDailyWaterIntakeLiters = (totalDailyWaterIntake / 1000).toFixed(3);
+
+    // Store the calculated goal in the state
+    setCalculatedGoal(totalDailyWaterIntakeLiters);
+
+    return totalDailyWaterIntakeLiters;
   };
 
   // You need to calculate the daily goal based on the provided user information
@@ -51,9 +58,13 @@ export default function PersonalDailyGoal({ route, navigation }) {
   }, [route.params]); // Trigger recalculation when user information changes
 
   const handleFinish = () => {
-    // Navigate to the Dashboard screen and pass the calculated daily goal
-    navigation.navigate('Dashboard', { dailyGoal });
+    // Convert daily goal from liters to milliliters
+    const dailyGoalInMilliliters = Math.round(calculatedGoal * 1000);
+
+    // Navigate to the Dashboard screen and pass the stored calculated daily goal in milliliters
+    navigation.navigate('Dashboard', { customGoal: dailyGoalInMilliliters });
   };
+  
 
   return (
     <View style={styles.container}>
@@ -61,7 +72,7 @@ export default function PersonalDailyGoal({ route, navigation }) {
         <View style={styles.overlay}>
           <View style={styles.appContainer}>
             <Image source={logodrink} style={styles.logo} />
-            <Text style={styles.headerMotto2}>Your Daily Goal is {dailyGoal} ml</Text>
+            <Text style={styles.headerMotto2}>Your Daily Goal is {dailyGoal} L</Text>
             <TouchableOpacity
               style={styles.addButton}
               onPress={handleFinish}
@@ -114,13 +125,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "white",
     top: 140,
-  },
-
-  //-Arwen
-  headerMotto3: {
-    fontSize: 19,
-    color: "white",
-    top: 160,
   },
 
   addButton: {

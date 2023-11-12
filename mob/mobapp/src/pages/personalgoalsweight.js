@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
-//assets
+// assets
 import bg from '../assets/bg.png';
 
-export default function PersonalWeight({ navigation, route}) {
+export default function PersonalWeight({ navigation, route }) {
   const [userinput, setCustom] = useState('');
   const [error, setError] = useState('');
 
@@ -19,7 +19,7 @@ export default function PersonalWeight({ navigation, route}) {
     setError('');
 
     // Pass the custom goal to the PersonalAge screen
-    navigation.navigate('PersonalAge', { ...route.params, weight: userinput });
+    navigation.navigate('PersonalAge', { ...route.params, weight: parseFloat(userinput) });
   };
 
   return (
@@ -31,7 +31,8 @@ export default function PersonalWeight({ navigation, route}) {
               style={[styles.textInput, !userinput && styles.placeholder]}
               placeholder="Enter your Weight"
               onChangeText={(text) => {
-                text = text.replace(/[^0-9]/g, '').slice(0, 3);
+                // Allow only numbers with decimal
+                text = text.replace(/[^0-9.]/g, '');
                 setCustom(text);
               }}
               value={userinput}
@@ -43,7 +44,7 @@ export default function PersonalWeight({ navigation, route}) {
             style={styles.addButton}
             onPress={setCustomGoal}
           >
-            <Text style={styles.addButtonLabel}>Finish</Text>
+            <Text style={styles.addButtonLabel}>Next</Text>
           </TouchableOpacity>
 
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     flex: 1,
-    fontSize:20,
+    fontSize: 20,
     color: 'white',
     paddingVertical: 10,
   },
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   },
 
   addButton: {
-    backgroundColor: '#A3D7E7',
+    backgroundColor: '#8BADD3',
     paddingVertical: 23,
     paddingHorizontal: 50,
     borderRadius: 10,

@@ -20,6 +20,7 @@ export default function Dashboard({ navigation, route }) {
             onPress={() => handleButtonPress('Rarely')}
           >
             <Text style={styles.goalButtonLabel}>Rarely</Text>
+            <Text style={styles.goalButtonLabel2}> 1 day</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -27,6 +28,7 @@ export default function Dashboard({ navigation, route }) {
             onPress={() => handleButtonPress('Normal')}
           >
             <Text style={styles.goalButtonLabel}>Normal</Text>
+            <Text style={styles.goalButtonLabel2}>2-3 days</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -34,6 +36,7 @@ export default function Dashboard({ navigation, route }) {
             onPress={() => handleButtonPress('Often')}
           >
             <Text style={styles.goalButtonLabel}>Often</Text>
+            <Text style={styles.goalButtonLabel2}>4-5 days</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -41,6 +44,7 @@ export default function Dashboard({ navigation, route }) {
             onPress={() => handleButtonPress('Always')}
           >
             <Text style={styles.goalButtonLabel}>Always</Text>
+            <Text style={styles.goalButtonLabel2}>Everday</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -96,6 +100,13 @@ const styles = StyleSheet.create({
 
   goalButtonLabel: {
     fontSize: 16,
+    color: '#333',
+    fontWeight: 'bold',
+    textAlign: 'center', // Center the text horizontally
+  },
+
+  goalButtonLabel2: {
+    fontSize: 11,
     color: '#333',
     fontWeight: 'bold',
     textAlign: 'center', // Center the text horizontally

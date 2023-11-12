@@ -44,7 +44,7 @@ export default function PersonalAge({ navigation, route }) {
             style={styles.addButton}
             onPress={setCustomGoal}
           >
-            <Text style={styles.addButtonLabel}>Finish</Text>
+            <Text style={styles.addButtonLabel}>Next</Text>
           </TouchableOpacity>
 
           {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
 
   addButton: {
-    backgroundColor: '#A3D7E7',
+    backgroundColor: '#8BADD3',
     paddingVertical: 23,
     paddingHorizontal: 50,
     borderRadius: 10,
