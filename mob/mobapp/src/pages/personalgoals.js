@@ -3,6 +3,10 @@ import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react
 import { useNavigation } from '@react-navigation/native';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+
+//assets
+import bg from '../assets/bg.png';
+
 export default function Dashboard({ route }) {
   const navigation = useNavigation();
 
@@ -18,7 +22,7 @@ export default function Dashboard({ route }) {
 
   return (
     <ImageBackground
-      source={require('/Users/Sanchez/Desktop/bg.png')}
+      source={bg}
       style={styles.container}
     >
       <View style={styles.overlay}>

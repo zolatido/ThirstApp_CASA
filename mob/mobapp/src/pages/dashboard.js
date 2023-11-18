@@ -25,12 +25,13 @@ export default function Dashboard({ navigation, route }) {
   };
 
 
-  const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
+   //const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
  
 
-  // Use the custom goal if available, otherwise use the default
-  const customGoal = route.params ? route.params.customGoal : null;
-  const dailyGoalcustom = customGoal ? parseInt(customGoal, 10) : dailyGoals[selectedBottleSize];
+    // Use the custom goal if available, otherwise use the default
+    const customGoal = route.params ? route.params.customGoal : null;
+    const dailyGoal = customGoal ? parseFloat(customGoal, 10) : dailyGoals[selectedBottleSize];
+  
 
 
 
@@ -120,6 +121,12 @@ export default function Dashboard({ navigation, route }) {
     navigation.navigate('Settings');  
   };
 
+  const navigateToGoals = () => {
+    closeHeaderModal();
+    setModalVisible(false); // Close the modal
+    navigation.navigate('Goals'); // Navigate to the "Goals" screen
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
@@ -128,6 +135,9 @@ export default function Dashboard({ navigation, route }) {
             <View style={styles.headerContainer}>
               <TouchableOpacity onPress={toggleHeaderModal}>
                 <DehazeIcon/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={navigateToGoals} style={styles.backButton}>
+                <Text style={styles.backButtonText}>Back to Goals</Text>
               </TouchableOpacity>
             </View>
            </View> 
@@ -457,5 +467,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     width: '80%',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  
+  backButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

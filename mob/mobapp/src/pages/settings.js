@@ -19,7 +19,7 @@ export default function Reminder({navigation}) {
 
   return (
     <ImageBackground
-      source={require('/Users/Sanchez/Desktop/superlight.jpg')}
+      source={bg}
       style={styles.container}
     >
       <View style={styles.overlay}>
