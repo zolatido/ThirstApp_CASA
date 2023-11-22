@@ -3,10 +3,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // assets
 import bg from '../assets/bg.png';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 export default function CustomGoals() {
   const navigation = useNavigation();
@@ -34,9 +35,10 @@ export default function CustomGoals() {
   return (
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
-        <TouchableOpacity style={styles.backButton} onPress={goBack}>
-          <ArrowBackIcon style={styles.backButtonIcon} />
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.backButton} onPress={goBack}>
+      <MaterialIcons name="arrow-back" style={styles.backButtonIcon} />
+      </TouchableOpacity>
+
         <View style={styles.inputContainer}>
           <View style={styles.inputBox}>
             <TextInput
