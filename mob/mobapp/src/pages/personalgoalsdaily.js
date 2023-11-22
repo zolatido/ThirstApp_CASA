@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // assets
 import logodrink from '../assets/logotrans.png';
@@ -77,9 +77,9 @@ export default function PersonalDailyGoal({ route, navigation }) {
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
         <View style={styles.overlay}>
-          <TouchableOpacity style={styles.backButton} onPress={goBackToPersonalAge}>
-            <ArrowBackIcon style={styles.backButtonIcon} />
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={goBackToPersonalAge}>
+        <MaterialIcons name="arrow-back" style={styles.backButtonIcon} />
+       </TouchableOpacity>
           <View style={styles.appContainer}>
             <Image source={logodrink} style={styles.logo} />
             <Text style={styles.headerMotto2}>Your Daily Goal is {dailyGoal} L</Text>

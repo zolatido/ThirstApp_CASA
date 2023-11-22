@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
 
 // assets
 import bg from '../assets/bg.png';
@@ -34,7 +34,7 @@ export default function PersonalAge({ route }) {
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
         <TouchableOpacity style={styles.backButton} onPress={goBackToPersonalWeight}>
-          <ArrowBackIcon style={styles.backButtonIcon} />
+          <Icon name="arrow-back" style={styles.backButtonIcon} />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
           <View style={styles.inputBox}>

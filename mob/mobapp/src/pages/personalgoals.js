@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
 
 //assets
 import bg from '../assets/bg.png';
@@ -27,7 +26,7 @@ export default function Dashboard({ route }) {
     >
       <View style={styles.overlay}>
         <TouchableOpacity style={styles.backButton} onPress={goBackToDashboard}>
-          <ArrowBackIcon style={styles.backButtonIcon} />
+          <Icon name="arrow-back" style={styles.backButtonIcon} />
         </TouchableOpacity>
 
         <Text style={styles.questionText}>How often do you do sports?</Text>
@@ -61,7 +60,7 @@ export default function Dashboard({ route }) {
             onPress={() => handleButtonPress('Always')}
           >
             <Text style={styles.goalButtonLabel}>Always</Text>
-            <Text style={styles.goalButtonLabel2}>Everday</Text>
+            <Text style={styles.goalButtonLabel2}>Everyday</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -118,14 +117,12 @@ const styles = StyleSheet.create({
   goalButtonLabel: {
     fontSize: 16,
     color: '#333',
-    fontWeight: 'bold',
     textAlign: 'center', // Center the text horizontally
   },
 
   goalButtonLabel2: {
     fontSize: 11,
     color: '#333',
-    fontWeight: 'bold',
     textAlign: 'center', // Center the text horizontally
   },
 });

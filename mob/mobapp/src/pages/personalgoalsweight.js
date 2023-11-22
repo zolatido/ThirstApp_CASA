@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
 
 // assets
 import bg from '../assets/bg.png';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function PersonalWeight({ route }) {
   const navigation = useNavigation();
@@ -34,10 +34,10 @@ export default function PersonalWeight({ route }) {
     <ImageBackground source={bg} style={styles.container}>
       <View style={styles.overlay}>
         <TouchableOpacity style={styles.backButton} onPress={goBackToPersonal}>
-        <ArrowBackIcon style={styles.backButtonIcon} />
+          <Icon name="arrow-back" style={styles.backButtonIcon} />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
-          <View style={styles.inputBox}>
+          <View style={styles.inputBox}>  
             <TextInput
               style={[styles.textInput, !userinput && styles.placeholder]}
               placeholder="Enter your Weight"
