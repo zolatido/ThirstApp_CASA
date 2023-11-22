@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // assets
 import logodrink from '../assets/logotrans.png';
 import bg from '../assets/bg.png';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function PersonalDailyGoal({ route, navigation }) {
-  const [dailyGoal, setDailyGoal] = useState(0); // Initialize with 0 or the default value
+  const [dailyGoal, setDailyGoal] = useState(0); // Initialize default value
   const [calculatedGoal, setCalculatedGoal] = useState(0); // Store the calculated goal
   
 
-  // Function to calculate the total daily water intake based on the provided formula
+  // calculate the total daily water intake
   const calculateDailyGoal = (weight, age, playFrequency) => {
     // Base Water Intake Rate (ml/kg)
-    const baseWaterIntakeRate = Math.floor(Math.random() * (35 - 30 + 1)) + 30; // Random value in the range [30, 35]
+    const baseWaterIntakeRate = Math.floor(Math.random() * (35 - 30 + 1)) + 30; 
 
     // Base Water Intake
     const baseWaterIntake = weight * baseWaterIntakeRate;
@@ -36,7 +35,7 @@ export default function PersonalDailyGoal({ route, navigation }) {
         activityLevelAdjustment = 1.5;
         break;
       default:
-        activityLevelAdjustment = 1.0; // Default to Normal if playFrequency is not recognized
+        activityLevelAdjustment = 1.0;
     }
 
     // Total Daily Water Intake in milliliters
@@ -51,20 +50,20 @@ export default function PersonalDailyGoal({ route, navigation }) {
     return totalDailyWaterIntakeLiters;
   };
 
-  // You need to calculate the daily goal based on the provided user information
+  //  calculate the daily goal 
   useEffect(() => {
-    // Access user information from the route.params and calculate the daily goal
+    // get info route.params and calculate the daily goal
     const { weight, age, sports } = route.params;
-    // Perform your calculation here and set the value using setDailyGoal
+    // 
     const calculatedGoal = calculateDailyGoal(weight, age, sports);
     setDailyGoal(calculatedGoal);
-  }, [route.params]); // Trigger recalculation when user information changes
+  }, [route.params]); // recalculation when user information changes
 
   const handleFinish = () => {
     // Convert daily goal from liters to milliliters
     const dailyGoalInMilliliters = Math.round(calculatedGoal * 1000);
 
-    // Navigate to the Dashboard screen and pass the stored calculated daily goal in milliliters
+    // Navigate to the Dashboard screen 
     navigation.navigate('Dashboard', { customGoal: dailyGoalInMilliliters });
   };
 

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
 
 // assets
 import bg from '../assets/bg.png';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
+
 
 export default function PersonalAge({ route }) {
   const navigation = useNavigation();
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  // Enter your drinking goal
+  // 
   placeholder: {
     color: 'gray',
   },

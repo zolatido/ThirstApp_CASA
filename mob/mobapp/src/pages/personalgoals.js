@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Import from react-native-vector-icons
 
 //assets
 import bg from '../assets/bg.png';
+import Icon from 'react-native-vector-icons/Ionicons'; 
 
 export default function Dashboard({ route }) {
   const navigation = useNavigation();
@@ -14,8 +14,8 @@ export default function Dashboard({ route }) {
     navigation.navigate('PersonalWeight', { ...route.params, sports: goalType });
   };
 
-  const goBackToDashboard = () => {
-    // Navigate back to the Dashboard screen
+  const goBackToGoals = () => {
+    // back to goals screen
     navigation.navigate('Goals');
   };
 
@@ -25,7 +25,7 @@ export default function Dashboard({ route }) {
       style={styles.container}
     >
       <View style={styles.overlay}>
-        <TouchableOpacity style={styles.backButton} onPress={goBackToDashboard}>
+        <TouchableOpacity style={styles.backButton} onPress={goBackToGoals}>
           <Icon name="arrow-back" style={styles.backButtonIcon} />
         </TouchableOpacity>
 
