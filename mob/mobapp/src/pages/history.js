@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   //(HOME)started
   headerMotto2: {
     fontSize: 24,
-    fontWeight: 'bold',
+   // fontWeight: 'bold',
     color: "white",
     top: 50,
   },
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   historyDate: {
     fontSize: 16,
     color: 'white',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     marginBottom: 10,
   },
   historyText: {
