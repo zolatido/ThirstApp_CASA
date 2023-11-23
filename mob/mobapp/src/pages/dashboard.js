@@ -8,10 +8,6 @@ import { Picker } from '@react-native-picker/picker';
 //assets
 import bg from '../assets/bg.png';
 import bottle from '../assets/bottle.png';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Import the MaterialCommunityIcons
-
-// Import the necessary components from @react-navigation/bottom-tabs
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function Dashboard({ navigation, route }) {
   // Get the selected bottle size from the navigation parameters
@@ -104,7 +100,7 @@ export default function Dashboard({ navigation, route }) {
   const navigateToDashboard = () => {
     closeHeaderModal();
     setModalVisible(false); // Close modal
-    navigation.navigate('Dashboard'); 
+    navigation.navigate('TabScreens', { screen: 'Dashboard' });
   };
 
   // Navigate to History 
