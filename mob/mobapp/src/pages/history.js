@@ -11,7 +11,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import DehazeIcon from '@mui/icons-material/Dehaze';
+//assets
+
 import { Modal } from 'react-native';
 
 
@@ -59,9 +60,7 @@ export default function Dashboard({ navigation }) {
             <Text style={styles.headerMotto3}>Daily Report</Text>
           <Image source={logodrink} style={styles.logo} />
             <View style={styles.headerContainer}>
-              <TouchableOpacity onPress={toggleModal}>
-                <DehazeIcon />
-              </TouchableOpacity>
+             
             </View>
            
            
