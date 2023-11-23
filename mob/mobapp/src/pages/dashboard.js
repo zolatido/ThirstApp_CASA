@@ -1,14 +1,17 @@
 //dashboard.js
 
 import React, { useState } from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal, TextInput, Picker} from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, StyleSheet, Modal, TextInput } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 
 //assets
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DehazeIcon from '@mui/icons-material/Dehaze';
 import bg from '../assets/bg.png';
 import bottle from '../assets/bottle.png';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'; // Import the MaterialCommunityIcons
+
+// Import the necessary components from @react-navigation/bottom-tabs
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function Dashboard({ navigation, route }) {
   // Get the selected bottle size from the navigation parameters
@@ -24,9 +27,6 @@ export default function Dashboard({ navigation, route }) {
     'Custom': 0, 
   };
 
-
-   //const dailyGoal = dailyGoals[selectedBottleSize]; // Set the daily goal based on the selected size
- 
 
     // Use the custom goal if available, otherwise use the default
     const customGoal = route.params ? route.params.customGoal : null;
@@ -127,20 +127,19 @@ export default function Dashboard({ navigation, route }) {
     navigation.navigate('Goals'); // Navigate to the "Goals" screen
   };
 
+
+      
+
+
   return (
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
         <View style={styles.overlay}>
-          <View style={styles.appContainer}>
+        <View style={styles.appContainer}>
             <View style={styles.headerContainer}>
-              <TouchableOpacity onPress={toggleHeaderModal}>
-                <DehazeIcon/>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={navigateToGoals} style={styles.backButton}>
-                <Text style={styles.backButtonText}>Back to Goals</Text>
-              </TouchableOpacity>
+              
             </View>
-           </View> 
+          </View>
           
             <Text style={styles.header}>Quench Your Thirsts</Text>
             <View style={styles.meterContainer}>
@@ -199,12 +198,11 @@ export default function Dashboard({ navigation, route }) {
               <View style={styles.modalContent}>
                 <Text style={styles.modalText3}>Set Reminder Time</Text>
                   <View style={styles.pickerContainer}>
-                  <Picker
-                        selectedValue={reminderTime}
-                        onValueChange={(itemValue) => setReminderTime(itemValue)}
-                        style={styles.picker}
-                        textstyle={styles.pickerContainer}
-                      >
+  <Picker
+    selectedValue={reminderTime}
+    onValueChange={(itemValue) => setReminderTime(itemValue)}
+    style={styles.picker}
+  >
                         <Picker.Item label="Select Time" value="" />
                         <Picker.Item label="12:00 AM" value="0:00" />
                         <Picker.Item label="1:00 AM" value="1:00" />
@@ -296,8 +294,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     position: 'absolute',
     bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   consumedText: {
     fontSize: 18,
@@ -435,24 +431,24 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   pickerContainer: {
-    marginTop: 5,
+    marginTop: 20,
     borderColor: '#ccc',
     borderRadius: 5,
-    paddingHorizontal: 10, 
-    fontSize: 20,
-    alignSelf: 'center',
-    alignItems: 'center',
-  },
-  picker: {
-    height: '100%',
-    width: '100%',
-    fontSize: 12,
-    alignSelf: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
+    borderWidth: 1,
     paddingHorizontal: 10,
-    marginTop: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white', // Set a background color to make options visible
   },
+  
+  picker: {
+    height: 40,
+    width: '100%',
+    fontSize: 16,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  
   closeButton: {
     marginTop: 20,
   },
