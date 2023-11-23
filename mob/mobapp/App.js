@@ -1,4 +1,5 @@
-// Import necessary dependencies
+// App.js
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -6,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// Import your pages/components
+// Import pages/components
 import HomePage from './src/pages/homepage';
 import Goals from './src/pages/goals';
 import Dashboard from './src/pages/dashboard';
@@ -19,11 +20,10 @@ import Username from './src/pages/username';
 import History from './src/pages/history';
 import Settings from './src/pages/settings';
 
-// Create Stack and Tab navigators
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Dashboard Tab Navigator
+// Tab Navigator
 function DashboardTabNavigator() {
   return (
     <Tab.Navigator tabBarOptions={{ activeTintColor: '#8BADD3' }}>
@@ -49,14 +49,12 @@ function DashboardTabNavigator() {
           ),
         }}
       />
-      {/* Add more tabs as needed */}
+      
     </Tab.Navigator>
   );
 }
 
 
-
-// Main App component
 function App() {
   return (
     <NavigationContainer>
