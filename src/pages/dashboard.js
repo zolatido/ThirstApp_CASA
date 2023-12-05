@@ -73,6 +73,7 @@ export default function Dashboard({ navigation, route }) {
     // Set Reminder
     setModalVisible(true);
   };
+  
   const handleTimePicker = () => {
     setShowTimePicker(true);
   };
@@ -131,12 +132,10 @@ export default function Dashboard({ navigation, route }) {
     <View style={styles.container}>
       <ImageBackground source={bg} style={styles.backgroundImage}>
         <View style={styles.overlay}>
-        <View style={styles.appContainer}>
-            <View style={styles.headerContainer}>
-              
-            </View>
+          <View style={styles.appContainer}>
+            <View style={styles.headerContainer}></View>
           </View>
-          
+          <View style={styles.fixedContainer}>
             <Text style={styles.header}>Quench Your Thirsts</Text>
             <View style={styles.meterContainer}>
               <View style={styles.meter}>
@@ -168,14 +167,14 @@ export default function Dashboard({ navigation, route }) {
               </TouchableOpacity>
           </View>
       
-      <Modal
-        transparent={true}
-        visible={isHeaderModalVisible}
-        onBackdropPress={closeSlideInModal}
-        animationIn="slideInLeft"
-        animationOut="slideOutLeft"
-        onRequestClose={toggleModal}
-      >
+          <Modal
+            transparent={true}
+            visible={isHeaderModalVisible}
+            onBackdropPress={closeSlideInModal}
+            animationIn="slideInLeft"
+            animationOut="slideOutLeft"
+            onRequestClose={toggleModal}
+          >
         <View style={styles.modalContainer1}>
           <Text style={styles.welcomeText}>Welcome</Text>
           <TouchableOpacity onPress={navigateToDashboard}>
@@ -190,15 +189,29 @@ export default function Dashboard({ navigation, route }) {
         </View>
       </Modal>
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
-              <View style={styles.modalContainer}>
+            <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
                 <Text style={styles.modalText3}>Set Reminder Time</Text>
-                  <View style={styles.pickerContainer}>
-  <Picker
-    selectedValue={reminderTime}
-    onValueChange={(itemValue) => setReminderTime(itemValue)}
-    style={styles.picker}
-  >
+                <TouchableOpacity
+                    style={styles.pickerContainer}
+                    onPress={handleTimePicker}
+                  >
+                    <Text style={styles.pickerText}>
+                      {reminderTime ? `Selected Time: ${reminderTime}` : 'Select Time'}
+                    </Text>
+                  </TouchableOpacity>
+
+                {showTimePicker && (
+                  <Picker
+                  selectedValue={reminderTime}
+                  onValueChange={(itemValue) => {
+                    const [hour, minute] = itemValue.split(':');
+                    const formattedTime = `${hour}:${minute}`;
+                    setReminderTime(formattedTime);
+                  }}
+                  style={styles.picker}
+                >
+
                         <Picker.Item label="Select Time" value="" />
                         <Picker.Item label="12:00 AM" value="0:00" />
                         <Picker.Item label="1:00 AM" value="1:00" />
@@ -224,16 +237,17 @@ export default function Dashboard({ navigation, route }) {
                         <Picker.Item label="9:00 PM" value="21:00" />
                         <Picker.Item label="10:00 PM" value="22:00" />
                         <Picker.Item label="11:00 PM" value="23:00" />
-                      </Picker>
-                    </View>
-                  <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                  <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity> 
+                        </Picker>
+                )}
+                <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+              </View>
             </View>
+          </Modal>
           </View>
-           </Modal> 
-           </View>
-           </ImageBackground>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -271,20 +285,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
+  
+  fixedContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    // Add additional styling if needed
+  },
+
   meterContainer: {
-    height: 300,
-    width: 300,
+    height: 200, // Adjust the height as needed
+    width: 200,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
   },
+
   meter: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     backgroundColor: 'lightgray',
-    borderRadius: 100,
+    borderRadius: 75,
     overflow: 'hidden',
   },
+
   fill: {
     width: '100%',
     backgroundColor: 'blue',
@@ -427,15 +452,34 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   pickerContainer: {
-    marginTop: 20,
     borderColor: '#ccc',
     borderRadius: 5,
     borderWidth: 1,
     paddingHorizontal: 10,
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: 'white', // Set a background color to make options visible
+    backgroundColor: 'white',
+    width: '80%',
+    paddingVertical: 15,
+    marginBottom: 20,
   },
+
+  pickerText: {
+    fontSize: 16,
+  },
+  pickerDropdown: {
+    borderColor: '#ccc',
+    borderRadius: 5,
+    borderWidth: 1,
+    overflow: 'hidden', // Clip the dropdown
+    paddingHorizontal: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    width: '80%',
+    marginBottom: 20,
+  },
+  
   
   picker: {
     height: 40,
